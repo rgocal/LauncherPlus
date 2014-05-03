@@ -33,7 +33,7 @@ import com.lennox.utils.ThemeUtils;
 
 import java.lang.ref.WeakReference;
 
-public class LauncherApplication extends Application {
+public class LauncherApplication extends com.lennox.acra.AcraApplication {
     public LauncherModel mModel;
     public IconCache mIconCache;
     public ThemeUtils mThemeUtils;

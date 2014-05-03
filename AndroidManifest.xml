@@ -73,11 +73,12 @@
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="com.lennox.launcher.permission.READ_SETTINGS" />
     <uses-permission android:name="com.lennox.launcher.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name="com.lennox.launcher.LauncherApplication"
         android:label="@string/application_name"
-        android:icon="@mipmap/ic_launcher_home"
+        android:icon="@drawable/ic_launcher_home"
         android:hardwareAccelerated="true"
         android:largeHeap="@bool/config_largeHeap"
         android:supportsRtl="true">
@@ -107,7 +108,8 @@
         </receiver>
 
         <activity android:name="com.lennox.launcher.preference.Preferences"
-            android:label="@string/preferences_title">
+            android:label="@string/preferences_title"
+            android:theme="@style/Theme.Custom.Light.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="com.lennox.category.LAUNCHER_PREFERENCES" />
@@ -175,6 +177,14 @@
             android:writePermission="com.android.launcher.permission.WRITE_SETTINGS"
             android:exported="true"
             android:readPermission="com.android.launcher.permission.READ_SETTINGS" />
+
+        <activity
+            android:name="org.acra.CrashReportDialog"
+            android:excludeFromRecents="true"
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Holo.Light.Dialog">
+         </activity>
 
         <meta-data android:name="android.nfc.disable_beam_default"
             android:value="true" />

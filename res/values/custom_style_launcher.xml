@@ -1,0 +1,11 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <color name="action_bar_color">#ff52cc52</color>
+    <color name="status_bar_tint">@color/action_bar_color</color>
+    <color name="nav_bar_tint">@color/action_bar_color</color>
+
+    <style name="Theme.Custom.Launcher" parent="@style/Theme.Custom" />
+
+    <style name="Theme.Custom.Light.Launcher" parent="@style/Theme.Custom.Light" />
+
+</resources>
