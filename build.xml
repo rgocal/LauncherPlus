@@ -15,5 +15,6 @@
 
     <property name="android.library.reference.1" value="../../lennox-dev/UtilsLibrary" />
     <property name="android.library.reference.2" value="../../lennox-dev/AcraLibrary" />
+    <property name="android.library.reference.3" value="../../lennox-dev/PollFishLibrary" />
 
 </project>
