@@ -123,7 +123,7 @@ import java.util.Set;
 /**
  * Default launcher application.
  */
-public final class Launcher extends com.lennox.pollfish.PollFishActivity
+public final class Launcher extends Activity
         implements View.OnClickListener, OnLongClickListener, LauncherModel.Callbacks,
                    View.OnTouchListener {
     static final String TAG = "Launcher";
@@ -356,7 +356,7 @@ public final class Launcher extends com.lennox.pollfish.PollFishActivity
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         if (DEBUG_STRICT_MODE) {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                     .detectDiskReads()
