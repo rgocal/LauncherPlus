@@ -63,6 +63,7 @@ import android.os.Message;
 import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.speech.RecognizerIntent;
@@ -170,6 +171,8 @@ public final class Launcher extends com.lennox.pollfish.PollFishActivity
     // The Intent extra that defines whether to ignore the launch animation
     static final String INTENT_EXTRA_IGNORE_LAUNCH_ANIMATION =
             "com.android.launcher.intent.extra.shortcut.INGORE_LAUNCH_ANIMATION";
+
+    private static final String DIALOG_SHOWN_KEY = "new_launcher_dialog_shown";
 
     // Type: int
     private static final String RUNTIME_STATE_CURRENT_SCREEN = "launcher.current_screen";
@@ -772,6 +775,11 @@ public final class Launcher extends com.lennox.pollfish.PollFishActivity
         // Again, as with the above scenario, it's possible that one or more of the global icons
         // were updated in the wrong orientation.
         updateGlobalIcons();
+
+        if (Build.VERSION.SDK_INT >= 16 && !getDialogShown(this)) {
+            Log.d(TAG, "Showing new launcher dialog to user!");
+            newLauncherDialog(this);
+        }
     }
 
     @Override
@@ -4749,6 +4757,38 @@ public final class Launcher extends com.lennox.pollfish.PollFishActivity
         Log.d(TAG, "*********************");
         Log.d(TAG, "");
     }
+
+    public static boolean getDialogShown(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(DIALOG_SHOWN_KEY, false);
+    }
+
+    public static void saveDialogShown(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(DIALOG_SHOWN_KEY, true).commit();
+    }
+
+    private static void newLauncherDialog(final Context context) {
+        final AlertDialog dialog = new AlertDialog.Builder(context)
+            .setTitle(R.string.new_launcher_title)
+            .setMessage(R.string.new_launcher_message)
+            .setIcon(R.drawable.ic_launcher_new)
+            .setCancelable(false)
+            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    saveDialogShown(context);
+                    dialog.dismiss();
+                }
+            })
+            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    com.lennox.utils.aliases.AliasActivity.launchPlayStore(context, "com.lennox.launcher3");
+                    saveDialogShown(context);
+                    dialog.dismiss();
+                }
+            })
+            .create();
+        dialog.show();
+    }
+
 }
 
 interface LauncherTransitionable {

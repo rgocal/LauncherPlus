@@ -373,4 +373,7 @@
     <string name="dialog_color_picker">Color Picker</string>
     <string name="press_color_to_apply">Press on Color to apply</string>    
 
+    <string name="new_launcher_title">New launcher</string>
+    <string name="new_launcher_message">I have a new launcher out that is compatible with your device. Would you like to have a look?</string>
+
 </resources>
