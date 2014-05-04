@@ -65,7 +65,7 @@ import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
-public class Preferences extends PreferenceActivity
+public class Preferences extends com.lennox.pollfish.PollFishPreferenceActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = "Launcher.Preferences";
@@ -74,7 +74,7 @@ public class Preferences extends PreferenceActivity
     private static List<Header> mHeaders = new ArrayList<Header>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
