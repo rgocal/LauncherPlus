@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.SparseBooleanArray;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Checkable;
 import android.widget.ImageView;
@@ -27,6 +29,8 @@ import com.lennox.launcher.R;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 public class HiddenAppsActivity extends ListActivity implements MenuItem.OnMenuItemClickListener {
 
@@ -41,6 +45,17 @@ public class HiddenAppsActivity extends ListActivity implements MenuItem.OnMenuI
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setNavigationBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(R.color.status_bar_tint);
+            tintManager.setNavigationBarTintResource(R.color.nav_bar_tint);
+        }
 
         setTitle(R.string.hidden_apps_title);
         setContentView(R.layout.hidden_apps_list);
