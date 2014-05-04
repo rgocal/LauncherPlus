@@ -7,4 +7,6 @@
     <bool name="pollfish_on_config_change">false</bool>
     <bool name="pollfish_debug_mode">false</bool>
 
+    <integer name="pollfish_delay_in_hours">48</integer>
+
 </resources>
