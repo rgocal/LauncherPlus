@@ -58,19 +58,4 @@
             android:title="@string/preferences_interface_gestures_title"
             android:summary="@string/preferences_interface_gestures_summary" />
 
-    <header android:id="@+id/preferences_backup_section"
-            android:icon="@drawable/ic_backup"
-            android:title="@string/preferences_backup_title"
-            android:summary="@string/preferences_backup_summary" >
-        <intent android:targetPackage="com.lennox.backup"
-                android:targetClass="com.lennox.backup.BackupLauncherActivity" />
-    </header>
-
-    <header android:id="@+id/preferences_application_section"
-            android:title="@string/preferences_application_title" />
-
-    <header android:id="@+id/preferences_application_version"
-            android:icon="@drawable/ic_launcher_home"
-            android:summary="@string/application_copyright" />
-
 </preference-headers>

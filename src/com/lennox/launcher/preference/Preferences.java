@@ -38,6 +38,8 @@ import android.view.MenuItem;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -61,6 +63,8 @@ import java.util.List;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
+
 public class Preferences extends PreferenceActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -72,6 +76,18 @@ public class Preferences extends PreferenceActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            SystemBarTintManager tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintEnabled(true);
+            tintManager.setNavigationBarTintEnabled(true);
+            tintManager.setStatusBarTintResource(R.color.status_bar_tint);
+            tintManager.setNavigationBarTintResource(R.color.nav_bar_tint);
+        }
+
         mPreferences = getSharedPreferences(PreferencesProvider.PREFERENCES_KEY,
                 Context.MODE_PRIVATE);
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -112,65 +128,12 @@ public class Preferences extends PreferenceActivity
         updateHeaders();
     }
 
-    @Override
-    public void onHeaderClick(Header header, int position) {
-        super.onHeaderClick(header, position);
-        if (header.id == R.id.preferences_backup_section) {
-            android.os.Process.killProcess(android.os.Process.myPid());
-        } else if (header.id == R.id.preferences_application_version) {
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=lennykano%40gmail%2ecom&lc=AU&item_name=Lennox%20Corporation&item_number=LENNOX_LAUNCHER&currency_code=AUD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted"));
-            startActivity(browserIntent);
-        }
-    }
-
     private void updateHeaders() {
         int i = 0;
         List<Header> newHeaders = new ArrayList<Header>();
         while (i < mHeaders.size()) {
             Header header = mHeaders.get(i);
             newHeaders.add(header);
-
-            // Version preference
-            if (header.id == R.id.preferences_application_version) {
-                header.title = getString(R.string.application_name) + " " + getString(R.string.application_version);
-            }
-
-            if (header.id == R.id.preferences_application_version ||
-                        header.id == R.id.preferences_application_section) {
-                String lennoxDevice = "";
-                try {
-                    Class clazz = Class.forName("android.os.SystemProperties");
-                    Method method = clazz.getDeclaredMethod("get", String.class);
-                    lennoxDevice = (String) method.invoke(null, "ro.lennox.device");
-                    if (!lennoxDevice.equals("")) {
-                        newHeaders.remove(header);
-                    }
-                } catch (ClassNotFoundException e) {
-                    // Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IllegalArgumentException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (SecurityException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (NoSuchMethodException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            } else if (header.id == R.id.preferences_backup_section) {
-                try {
-                    getPackageManager().getPackageInfo("com.lennox.backup", PackageManager.GET_ACTIVITIES);
-                } catch (PackageManager.NameNotFoundException e) {
-                    newHeaders.remove(header);
-                }
-            }
 
             // Increment if not removed
             if (mHeaders.get(i) == header) {
@@ -419,11 +382,7 @@ public class Preferences extends PreferenceActivity
         private LayoutInflater mInflater;
 
         static int getHeaderType(Header header) {
-            if (header.id == R.id.preferences_application_section) {
-                return HEADER_TYPE_CATEGORY;
-            } else {
-                return HEADER_TYPE_NORMAL;
-            }
+            return HEADER_TYPE_NORMAL;
         }
 
         @Override
