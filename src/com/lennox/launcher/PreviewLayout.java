@@ -411,7 +411,10 @@ public class PreviewLayout extends FrameLayout
         mReorderAlarm.cancelAlarm();
         boolean reorderHomescreens = true;
         ItemInfo item = (ItemInfo) mCurrentDragView.getTag();
-        int from = (int)item.id;
+
+        if (item == null) return;
+
+        int from = (int) item.id;
         int to = from;
         CellLayout.LayoutParams lp = (CellLayout.LayoutParams) mCurrentDragView.getLayoutParams();
         if (item.cellX != mEmptyCell[0] || item.cellY != mEmptyCell[1]) {

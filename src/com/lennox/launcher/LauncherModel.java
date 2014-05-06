@@ -583,8 +583,10 @@ public class LauncherModel extends BroadcastReceiver {
         }
 
         item.container = container;
-        item.cellX = cells[0];
-        item.cellY = cells[1];
+        if (cells != null) {
+            item.cellX = cells[0];
+            item.cellY = cells[1];
+        }
         item.screen = screenEx;
 
         final ContentValues values = new ContentValues();
@@ -2285,8 +2287,10 @@ public class LauncherModel extends BroadcastReceiver {
             for (ItemInfo info : sBgWorkspaceItems) {
                 if (info instanceof ShortcutInfo) {
                     ShortcutInfo shortcut = (ShortcutInfo) info;
-                    if (shortcut.intent.toUri(0).equals(intent.toUri(0))) {
-                        items.add(shortcut);
+                    if (shortcut.intent != null && intent != null) {
+                        if (shortcut.intent.toUri(0).equals(intent.toUri(0))) {
+                            if (items != null) items.add(shortcut);
+                        }
                     }
                 }
             }
@@ -2628,7 +2632,7 @@ public class LauncherModel extends BroadcastReceiver {
 
                 mLabelCache.put(keyB, labelB);
             }
-            return mCollator.compare(labelA, labelB);
+            return mCollator.compare(labelA.toString(), labelB.toString());
         }
     }
     public static class WidgetAndShortcutNameComparator implements Comparator<Object> {

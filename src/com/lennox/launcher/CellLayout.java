@@ -1769,28 +1769,36 @@ public class CellLayout extends ViewGroup {
             switch (whichEdge) {
                 case LEFT:
                     for (int i = cs.y; i < cs.y + cs.spanY; i++) {
-                        if (edge[i] == cs.x + cs.spanX) {
+                        int index = i;
+                        if (index >= edge.size) index = edge.size-1;
+                        if (edge[index] == cs.x + cs.spanX) {
                             return true;
                         }
                     }
                     break;
                 case RIGHT:
                     for (int i = cs.y; i < cs.y + cs.spanY; i++) {
-                        if (edge[i] == cs.x) {
+                        int index = i;
+                        if (index >= edge.size) index = edge.size-1;
+                        if (edge[index] == cs.x) {
                             return true;
                         }
                     }
                     break;
                 case TOP:
                     for (int i = cs.x; i < cs.x + cs.spanX; i++) {
-                        if (edge[i] == cs.y + cs.spanY) {
+                        int index = i;
+                        if (index >= edge.size) index = edge.size-1;
+                        if (edge[index] == cs.y + cs.spanY) {
                             return true;
                         }
                     }
                     break;
                 case BOTTOM:
                     for (int i = cs.x; i < cs.x + cs.spanX; i++) {
-                        if (edge[i] == cs.y) {
+                        int index = i;
+                        if (index >= edge.size) index = edge.size-1;
+                        if (edge[index] == cs.y) {
                             return true;
                         }
                     }
@@ -3214,7 +3222,9 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
     }
 
     public boolean isOccupied(int x, int y) {
-        if (x < mCountX && y < mCountY) {
+        if (x < 0 || y < 0) {
+            throw new RuntimeException("Invalid position -1 given");
+        } else if (x < mCountX && y < mCountY) {
             return mOccupied[x][y];
         } else {
             throw new RuntimeException("Position exceeds the bound of this CellLayout");

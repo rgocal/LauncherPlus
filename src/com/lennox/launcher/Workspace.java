@@ -2728,12 +2728,12 @@ public class Workspace extends PagedView
         if (!mFadeInAdjacentScreens) {
             for (int i = 0; i < getChildCount(); i++) {
                 final CellLayout cl = (CellLayout) getChildAt(i);
-                cl.setShortcutAndWidgetAlpha(1f);
+                if (cl != null) cl.setShortcutAndWidgetAlpha(1f);
             }
         } else {
             // Double check at least current page is not transparent
             final CellLayout cl = (CellLayout) getChildAt(mCurrentPage);
-            cl.setShortcutAndWidgetAlpha(1f);
+            if (cl != null) cl.setShortcutAndWidgetAlpha(1f);
         }
     }
 
@@ -4849,7 +4849,7 @@ public class Workspace extends PagedView
     }
 
     public void moveScreen(int from, int to) {
-        ViewGroup cl = (ViewGroup)getChildAt(from);
+        ViewGroup cl = (ViewGroup) getChildAt(from);
         removeViewAt(from);
         addView(cl, to);
         if (from > to) {

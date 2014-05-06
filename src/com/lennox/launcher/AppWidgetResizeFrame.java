@@ -79,7 +79,11 @@ public class AppWidgetResizeFrame extends FrameLayout {
         mLauncher = (Launcher) context;
         mCellLayout = cellLayout;
         mWidgetView = widgetView;
-        mResizeMode = widgetView.getAppWidgetInfo().resizeMode;
+        if (widgetView != null && widgetView.getAppWidgetInfo() != null) {
+            mResizeMode = widgetView.getAppWidgetInfo().resizeMode;
+        } else {
+            mResizeMode = AppWidgetProviderInfo.RESIZE_NONE;
+        }
         mDragLayer = dragLayer;
         mWorkspace = (Workspace) dragLayer.findViewById(R.id.workspace);
 
