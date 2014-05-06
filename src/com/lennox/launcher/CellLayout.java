@@ -1770,7 +1770,7 @@ public class CellLayout extends ViewGroup {
                 case LEFT:
                     for (int i = cs.y; i < cs.y + cs.spanY; i++) {
                         int index = i;
-                        if (index >= edge.size) index = edge.size-1;
+                        if (index >= edge.length) index = edge.length-1;
                         if (edge[index] == cs.x + cs.spanX) {
                             return true;
                         }
@@ -1779,7 +1779,7 @@ public class CellLayout extends ViewGroup {
                 case RIGHT:
                     for (int i = cs.y; i < cs.y + cs.spanY; i++) {
                         int index = i;
-                        if (index >= edge.size) index = edge.size-1;
+                        if (index >= edge.length) index = edge.length-1;
                         if (edge[index] == cs.x) {
                             return true;
                         }
@@ -1788,7 +1788,7 @@ public class CellLayout extends ViewGroup {
                 case TOP:
                     for (int i = cs.x; i < cs.x + cs.spanX; i++) {
                         int index = i;
-                        if (index >= edge.size) index = edge.size-1;
+                        if (index >= edge.length) index = edge.length-1;
                         if (edge[index] == cs.y + cs.spanY) {
                             return true;
                         }
@@ -1797,7 +1797,7 @@ public class CellLayout extends ViewGroup {
                 case BOTTOM:
                     for (int i = cs.x; i < cs.x + cs.spanX; i++) {
                         int index = i;
-                        if (index >= edge.size) index = edge.size-1;
+                        if (index >= edge.length) index = edge.length-1;
                         if (edge[index] == cs.y) {
                             return true;
                         }
