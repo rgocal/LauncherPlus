@@ -4809,7 +4809,7 @@ public final class Launcher extends Activity
             })
             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
-                    com.lennox.utils.aliases.AliasActivity.launchPlayStore(context, "com.lennox.launcher3");
+                    com.lennox.utils.PlayStoreUtils.launchPlayStore(context, "com.lennox.launcher3");
                     saveDialogShown(context);
                     dialog.dismiss();
                 }
