@@ -65,6 +65,8 @@ import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 
+import com.lennox.preferences.PreferenceUtils;
+
 public class Preferences extends com.lennox.pollfish.PollFishPreferenceActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -125,22 +127,7 @@ public class Preferences extends com.lennox.pollfish.PollFishPreferenceActivity
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preferences_headers, target);
         mHeaders = target;
-        updateHeaders();
-    }
-
-    private void updateHeaders() {
-        int i = 0;
-        List<Header> newHeaders = new ArrayList<Header>();
-        while (i < mHeaders.size()) {
-            Header header = mHeaders.get(i);
-            newHeaders.add(header);
-
-            // Increment if not removed
-            if (mHeaders.get(i) == header) {
-                i++;
-            }
-        }
-        mHeaders = newHeaders;
+        PreferenceUtils.setDonateHeader(target, this);
     }
 
     @Override
@@ -382,7 +369,11 @@ public class Preferences extends com.lennox.pollfish.PollFishPreferenceActivity
         private LayoutInflater mInflater;
 
         static int getHeaderType(Header header) {
-            return HEADER_TYPE_NORMAL;
+            if (header.fragment == null && header.intent == null) {
+                return HEADER_TYPE_CATEGORY;
+            } else {
+                return HEADER_TYPE_NORMAL;
+            }
         }
 
         @Override

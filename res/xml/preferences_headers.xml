@@ -57,5 +57,8 @@
             android:fragment="com.lennox.launcher.preference.Preferences$GesturesFragment"
             android:title="@string/preferences_interface_gestures_title"
             android:summary="@string/preferences_interface_gestures_summary" />
+ 
+    <header android:id="@+id/about_category_pref" />
+    <header android:id="@+id/about_pref" />
 
 </preference-headers>
