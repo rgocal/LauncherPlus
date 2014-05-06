@@ -120,6 +120,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.lennox.utils.DefaultPackages;
+
 /**
  * Default launcher application.
  */
@@ -2429,10 +2431,14 @@ public final class Launcher extends Activity
      */
     public void onClickBrowserButton(View v) {
         v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_APP_BROWSER);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_APP_BROWSER);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            launchFirstWorkingIntent(DefaultPackages.BROWSER_COMPONENTS);
+        }
     }
 
     /**
@@ -2442,9 +2448,13 @@ public final class Launcher extends Activity
      */
     public void onClickCameraButton(View v) {
         v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-        Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            launchFirstWorkingIntent(DefaultPackages.CAMERA_COMPONENTS);
+        }
     }
 
     /**
@@ -2454,10 +2464,14 @@ public final class Launcher extends Activity
      */
     public void onClickContactsButton(View v) {
         v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_APP_CONTACTS);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_APP_CONTACTS);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            launchFirstWorkingIntent(DefaultPackages.CONTACTS_COMPONENTS);
+        }
     }
 
     /**
@@ -2467,9 +2481,13 @@ public final class Launcher extends Activity
      */
     public void onClickDialButton(View v) {
         v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            launchFirstWorkingIntent(DefaultPackages.DIALER_COMPONENTS);
+        }
     }
 
     /**
@@ -2479,20 +2497,31 @@ public final class Launcher extends Activity
      */
     public void onClickMessageButton(View v) {
         v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-        final String[] packages = getResources().getStringArray(R.array.messaging_package_names);
-        final String[] components = getResources().getStringArray(R.array.messaging_component_names);
-        for (int i = 0; i < packages.length; i++) {
+        launchFirstWorkingIntent(DefaultPackages.MESSAGING_COMPONENTS);
+    }
+
+    private void launchFirstWorkingIntent(String[] components) {
+        Intent intent = new Intent();
+        ActivityInfo info = null;
+        ComponentName cn = null;
+        for (String component : components) {
             try {
-                Intent intent = new Intent();
-                intent.setClassName(packages[i], components[i]);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                return;
-            } catch (ActivityNotFoundException ex) {
+                cn = ComponentName.unflattenFromString(component);
+                info = getPackageManager().getActivityInfo(cn, 0);
+                if (info != null && cn != null) break;
+            } catch (PackageManager.NameNotFoundException e) {
             }
         }
-        // Show toast, activity not found
-        Toast.makeText(this, getString(R.string.activity_not_found), Toast.LENGTH_LONG).show();
+        if (info != null && cn != null) {
+            intent.setComponent(cn);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
+                    Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(this, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     /**
