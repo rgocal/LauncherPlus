@@ -1728,32 +1728,40 @@ public class CellLayout extends ViewGroup {
                     case LEFT:
                         int left = cs.x;
                         for (int j = cs.y; j < cs.y + cs.spanY; j++) {
-                            if (left < edge[j] || edge[j] < 0) {
-                                edge[j] = left;
+                            int index = j;
+                            if (index >= edge.length) index = edge.length-1;
+                            if (left < edge[index] || edge[index] < 0) {
+                                edge[index] = left;
                             }
                         }
                         break;
                     case RIGHT:
                         int right = cs.x + cs.spanX;
                         for (int j = cs.y; j < cs.y + cs.spanY; j++) {
-                            if (right > edge[j]) {
-                                edge[j] = right;
+                            int index = j;
+                            if (index >= edge.length) index = edge.length-1;
+                            if (right > edge[index]) {
+                                edge[index] = right;
                             }
                         }
                         break;
                     case TOP:
                         int top = cs.y;
                         for (int j = cs.x; j < cs.x + cs.spanX; j++) {
-                            if (top < edge[j] || edge[j] < 0) {
-                                edge[j] = top;
+                            int index = j;
+                            if (index >= edge.length) index = edge.length-1;
+                            if (top < edge[index] || edge[index] < 0) {
+                                edge[index] = top;
                             }
                         }
                         break;
                     case BOTTOM:
                         int bottom = cs.y + cs.spanY;
                         for (int j = cs.x; j < cs.x + cs.spanX; j++) {
-                            if (bottom > edge[j]) {
-                                edge[j] = bottom;
+                            int index = j;
+                            if (index >= edge.length) index = edge.length-1;
+                            if (bottom > edge[index]) {
+                                edge[index] = bottom;
                             }
                         }
                         break;
@@ -3223,7 +3231,7 @@ out:            for (int i = x; i < x + spanX - 1 && x < xCount; i++) {
 
     public boolean isOccupied(int x, int y) {
         if (x < 0 || y < 0) {
-            throw new RuntimeException("Invalid position -1 given");
+            return true;
         } else if (x < mCountX && y < mCountY) {
             return mOccupied[x][y];
         } else {

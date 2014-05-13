@@ -1245,7 +1245,8 @@ public final class Launcher extends Activity
     }
 
     static int[] getMinSpanForWidget(Context context, AppWidgetProviderInfo info) {
-        return getSpanForWidget(context, info.provider, info.minResizeWidth, info.minResizeHeight);
+        return getSpanForWidget(context, info.provider, info.minResizeWidth,
+                info.minResizeHeight);
     }
 
     static int[] getSpanForWidget(Context context, PendingAddWidgetInfo info) {
@@ -1268,7 +1269,10 @@ public final class Launcher extends Activity
         if (appWidgetInfo == null) {
             appWidgetInfo = mAppWidgetManager.getAppWidgetInfo(appWidgetId);
         }
-
+        if (appWidgetInfo == null || appWidgetInfo.provider == null) {
+            resetAddInfo();
+            return;
+        }
         // Calculate the grid spans needed to fit this widget
         CellLayout layout = getCellLayout(container, screen);
 
@@ -3818,7 +3822,7 @@ public final class Launcher extends Activity
 
     private void updateOverflowMenuButton() {
         final View overflowMenuButton = findViewById(R.id.overflow_menu_button);
-        overflowMenuButton.setVisibility(View.VISIBLE);
+        if (overflowMenuButton != null) overflowMenuButton.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -4189,6 +4193,7 @@ public final class Launcher extends Activity
             mSavedState = null;
         }
 
+        mWorkspace.dispatchRestoreInstanceState(null);
         mWorkspace.restoreInstanceStateForRemainingPages();
 
         // If we received the result of any pending adds while the loader was running (e.g. the
