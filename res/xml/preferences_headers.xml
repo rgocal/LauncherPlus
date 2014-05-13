@@ -60,5 +60,7 @@
  
     <header android:id="@+id/about_category_pref" />
     <header android:id="@+id/about_pref" />
+    <header android:id="@+id/follow_pref" />
+    <header android:id="@+id/licenses_pref" />
 
 </preference-headers>

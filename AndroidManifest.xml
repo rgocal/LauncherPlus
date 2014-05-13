@@ -182,6 +182,20 @@
             android:exported="true"
             android:readPermission="com.android.launcher.permission.READ_SETTINGS" />
 
+        <activity
+            android:name="com.lennox.preferences.FollowDialog"
+            android:label="@string/follow_title"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/FollowMeDialogTheme"
+            android:excludeFromRecents="true" />
+
+        <activity
+            android:name="com.lennox.preferences.LicensesDialog"
+            android:label="@string/licenses_title"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/TransparentDialogTheme"
+            android:excludeFromRecents="true" />
+
         <receiver
             android:name="com.lennox.pollfish.PollFishReceiver"
             android:enabled="true" >
