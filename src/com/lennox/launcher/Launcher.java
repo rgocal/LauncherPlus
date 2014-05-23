@@ -2523,7 +2523,7 @@ public final class Launcher extends Activity
                     Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             try {
                 startActivity(intent);
-            } catch (ActivityNotFoundException e) {
+            } catch (Exception e) {
                 Toast.makeText(this, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
             }
         }
