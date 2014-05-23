@@ -829,6 +829,13 @@ public abstract class PagedView extends ViewGroup implements ViewGroup.OnHierarc
     }
 
     protected int getRelativeChildOffset(int index) {
+        if (mChildRelativeOffsets != null) {
+            if (index >= mChildRelativeOffsets.length) {
+                index = mChildRelativeOffsets.length - 1;
+            } else if (index < 0) {
+                index = 0;
+            }
+        }
         if (mChildRelativeOffsets != null && mChildRelativeOffsets[index] != -1) {
             return mChildRelativeOffsets[index];
         } else {
