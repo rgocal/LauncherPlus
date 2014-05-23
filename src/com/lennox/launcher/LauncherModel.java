@@ -2442,7 +2442,9 @@ public class LauncherModel extends BroadcastReceiver {
     ShortcutInfo addShortcut(Context context, Intent data, long container, int screen,
             int cellX, int cellY, boolean notify) {
         final ShortcutInfo info = infoFromShortcutIntent(context, data, null);
-        if (info == null || info.intent == null) {
+        if (info == null || info.intent == null ||
+                info.intent.getAction() == null ||
+                info.intent.getCategories() == null) {
             return null;
         }
 
