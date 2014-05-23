@@ -4133,6 +4133,7 @@ public class Workspace extends PagedView
     public Bitmap createWidgetBitmap(ItemInfo widgetInfo, View layout) {
         int[] unScaledSize = mLauncher.getWorkspace().estimateItemSize(widgetInfo.spanX,
                 widgetInfo.spanY, false);
+        if (unScaledSize[0] <= 0 || unScaledSize[1] <= 0) return null;
         int visibility = layout.getVisibility();
         layout.setVisibility(VISIBLE);
 
@@ -4208,8 +4209,10 @@ public class Workspace extends PagedView
         }
         if ((animationType == ANIMATE_INTO_POSITION_AND_RESIZE || external) && finalView != null) {
             Bitmap crossFadeBitmap = createWidgetBitmap(info, finalView);
-            dragView.setCrossFadeBitmap(crossFadeBitmap);
-            dragView.crossFade((int) (duration * 0.8f));
+            if (crossFadeBitmap != null) {
+                dragView.setCrossFadeBitmap(crossFadeBitmap);
+                dragView.crossFade((int) (duration * 0.8f));
+            }
         } else if (info.itemType == LauncherSettings.Favorites.ITEM_TYPE_APPWIDGET && external) {
             scaleXY[0] = scaleXY[1] = Math.min(scaleXY[0],  scaleXY[1]);
         }
