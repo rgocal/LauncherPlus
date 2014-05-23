@@ -1834,6 +1834,7 @@ public final class Launcher extends Activity
     @Override
     public void startActivityForResult(Intent intent, int requestCode) {
         if (requestCode >= 0) mWaitingForResult = true;
+        if (intent == null) return;
         super.startActivityForResult(intent, requestCode);
     }
 
