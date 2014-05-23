@@ -71,7 +71,7 @@ public class ThemeUtils {
         List<String> tempList = new ArrayList<String>();
         final PackageManager pm = mContext.getPackageManager();
 
-        // Initialise with Lennox Launcher themes
+        // Initialise with Launcher themes
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory("com.lennox.launcher.THEME");
         try {
