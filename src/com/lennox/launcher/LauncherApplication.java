@@ -127,6 +127,9 @@ public class LauncherApplication extends com.lennox.acra.AcraApplication {
     }
 
     LauncherProvider getLauncherProvider() {
+        if (mLauncherProvider == null) {
+            mLauncherProvider = new WeakReference<LauncherProvider>(new LauncherProvider());
+        }
         return mLauncherProvider.get();
     }
 
