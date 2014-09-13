@@ -79,15 +79,12 @@ public class Preferences extends com.lennox.pollfish.PollFishPreferenceActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
             Window w = getWindow();
-            w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
             tintManager.setStatusBarTintEnabled(true);
-            tintManager.setNavigationBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.status_bar_tint);
-            tintManager.setNavigationBarTintResource(R.color.nav_bar_tint);
+            tintManager.setStatusBarTintResource(R.color.accent_color);
         }
 
         mPreferences = getSharedPreferences(PreferencesProvider.PREFERENCES_KEY,

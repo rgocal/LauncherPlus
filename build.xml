@@ -8,7 +8,7 @@
 
     <fail message="manifest.dir is missing. please check environment is initialising correctly" unless="manifest.dir" />
 
-    <property name="target" value="android-19" />
+    <property name="target" value="android-21" />
 
     <property name="version.code" value="15" />
     <property name="version.name" value="1.2.4" />
