@@ -93,6 +93,11 @@ public class Preferences extends com.lennox.pollfish.PollFishPreferenceActivity
     }
 
     @Override
+    public boolean isValidFragment(String fragmentName) {
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
