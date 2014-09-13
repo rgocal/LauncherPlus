@@ -214,5 +214,9 @@
 
         <meta-data android:name="android.nfc.disable_beam_default"
             android:value="true" />
+
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
     </application>
 </manifest>
