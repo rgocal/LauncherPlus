@@ -1,6 +1,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <color name="accent_color">#ff52cc52</color>
+    <color name="accent_color_dark">#ff3f9f3f</color>
 
     <style name="Theme.Custom.Launcher" parent="@style/Theme.Custom" />
 
