@@ -30,8 +30,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-
 public class HiddenAppsActivity extends ListActivity implements MenuItem.OnMenuItemClickListener {
 
     private boolean mSaved;
@@ -46,13 +44,7 @@ public class HiddenAppsActivity extends ListActivity implements MenuItem.OnMenuI
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-            Window w = getWindow();
-            w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.accent_color);
-        }
+        com.readystatesoftware.systembartint.SystemBarTintManager.tintStatusBar(this);
 
         setTitle(R.string.hidden_apps_title);
         setContentView(R.layout.hidden_apps_list);
