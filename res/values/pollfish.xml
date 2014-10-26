@@ -4,9 +4,6 @@
     <string name="pollfish_api_key">7fd70916-fc77-4726-93a2-efff896ef267</string>
     <string name="pollfish_position">MIDDLE_RIGHT</string>
     <integer name="pollfish_padding">5</integer>
-    <bool name="pollfish_on_config_change">false</bool>
     <bool name="pollfish_debug_mode">false</bool>
-
-    <integer name="pollfish_delay_in_hours">36</integer>
 
 </resources>

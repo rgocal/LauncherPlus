@@ -63,12 +63,19 @@ import java.util.List;
 
 import net.margaritov.preference.colorpicker.ColorPickerPreference;
 
-import com.readystatesoftware.systembartint.SystemBarTintManager;
-
 import com.lennox.preferences.PreferenceUtils;
 
-public class Preferences extends com.lennox.pollfish.PollFishPreferenceActivity
-        implements SharedPreferences.OnSharedPreferenceChangeListener {
+import com.pollfish.interfaces.PollfishSurveyReceivedListener;
+import com.pollfish.interfaces.PollfishSurveyNotAvailableListener;
+import com.pollfish.interfaces.PollfishSurveyCompletedListener;
+import com.pollfish.interfaces.PollfishOpenedListener;
+import com.pollfish.interfaces.PollfishClosedListener;
+import com.lennox.pollfish.PollFishHelper;
+
+public class Preferences extends PreferenceActivity
+        implements SharedPreferences.OnSharedPreferenceChangeListener,
+        PollfishSurveyReceivedListener, PollfishOpenedListener,
+        PollfishSurveyNotAvailableListener, PollfishSurveyCompletedListener, PollfishClosedListener {
 
     private static final String TAG = "Launcher.Preferences";
 
@@ -79,13 +86,8 @@ public class Preferences extends com.lennox.pollfish.PollFishPreferenceActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-            Window w = getWindow();
-            w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintResource(R.color.accent_color);
-        }
+        com.readystatesoftware.systembartint.SystemBarTintManager.tintStatusBar(this);
+        PollFishHelper.onCreate(this);
 
         mPreferences = getSharedPreferences(PreferencesProvider.PREFERENCES_KEY,
                 Context.MODE_PRIVATE);
@@ -113,6 +115,7 @@ public class Preferences extends com.lennox.pollfish.PollFishPreferenceActivity
     @Override
     protected void onResume() {
         super.onResume();
+        PollFishHelper.onResume(this);
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putBoolean(PreferencesProvider.PREFERENCES_VISITED, true);
         editor.commit();
@@ -129,7 +132,7 @@ public class Preferences extends com.lennox.pollfish.PollFishPreferenceActivity
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preferences_headers, target);
         mHeaders = target;
-        PreferenceUtils.setDonateHeader(target, this);
+        PreferenceUtils.setAboutHeader(target, this);
     }
 
     @Override
@@ -421,9 +424,11 @@ public class Preferences extends com.lennox.pollfish.PollFishPreferenceActivity
                 holder = new HeaderViewHolder();
                 switch (headerType) {
                     case HEADER_TYPE_CATEGORY:
-                        view = new TextView(getContext(), null,
-                                android.R.attr.listSeparatorTextViewStyle);
-                        holder.title = (TextView) view;
+                        view = mInflater.inflate(
+                                R.layout.preference_header_category, parent,
+                                false);
+                        holder.title = (TextView)
+                                view.findViewById(android.R.id.title);
                         break;
 
                     case HEADER_TYPE_NORMAL:
@@ -464,5 +469,32 @@ public class Preferences extends com.lennox.pollfish.PollFishPreferenceActivity
 
             return view;
         }
+    }
+
+    // PollFish Helpers
+
+    @Override
+    public void onPollfishSurveyReceived(boolean shortSurveys, int surveyPrice) {
+        PollFishHelper.onPollfishSurveyReceived(this, shortSurveys, surveyPrice);
+    }
+
+    @Override
+    public void onPollfishSurveyNotAvailable() {
+        PollFishHelper.onPollfishSurveyNotAvailable(this);
+    }
+
+    @Override
+    public void onPollfishSurveyCompleted(boolean shortSurveys , int surveyPrice) {
+        PollFishHelper.onPollfishSurveyCompleted(this, shortSurveys, surveyPrice);
+    }
+
+    @Override
+    public void onPollfishOpened () {
+        PollFishHelper.onPollfishOpened(this);
+    }
+
+    @Override
+    public void onPollfishClosed () {
+        PollFishHelper.onPollfishClosed(this);
     }
 }
