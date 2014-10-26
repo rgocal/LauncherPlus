@@ -182,41 +182,8 @@
             android:exported="true"
             android:readPermission="com.android.launcher.permission.READ_SETTINGS" />
 
-        <activity
-            android:name="com.lennox.preferences.FollowDialog"
-            android:label="@string/follow_title"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/FollowMeDialogTheme"
-            android:excludeFromRecents="true" />
-
-        <activity
-            android:name="com.lennox.preferences.LicensesDialog"
-            android:label="@string/licenses_title"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/TransparentDialogTheme"
-            android:excludeFromRecents="true" />
-
-        <receiver
-            android:name="com.lennox.pollfish.PollFishReceiver"
-            android:enabled="true" >
-            <intent-filter>
-                <action android:name="com.lennox.pollfish.SURVEY_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
-        <activity
-            android:name="org.acra.CrashReportDialog"
-            android:excludeFromRecents="true"
-            android:finishOnTaskLaunch="true"
-            android:launchMode="singleInstance"
-            android:theme="@style/AcraDialogTheme">
-         </activity>
-
         <meta-data android:name="android.nfc.disable_beam_default"
             android:value="true" />
-
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
 
     </application>
 </manifest>

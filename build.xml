@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="Launcher" default="help">
+
     <property environment="env" />
     <!-- MANIFEST_DIR must be set in build script. -->
     <condition property="manifest.dir" value="${env.MANIFEST_DIR}">
@@ -8,17 +9,8 @@
 
     <fail message="manifest.dir is missing. please check environment is initialising correctly" unless="manifest.dir" />
 
-    <property name="target" value="android-21" />
+    <loadproperties srcFile="custom.properties"/>
 
-    <property name="version.code" value="15" />
-    <property name="version.name" value="1.2.4" />
-
-    <import file="custom_rules.xml" optional="true" />
     <import file="${manifest.dir}/custom-android-build.xml" />
-
-    <property name="android.library.reference.1" value="../../lennox-dev/UtilsLibrary" />
-    <property name="android.library.reference.2" value="../../lennox-dev/AcraLibrary" />
-    <property name="android.library.reference.3" value="../../lennox-dev/PollFishLibrary" />
-    <property name="android.library.reference.4" value="../../lennox-dev/PlayServicesLibrary" />
 
 </project>
