@@ -78,7 +78,7 @@
 
     <application
         android:name="com.lennox.launcher.LauncherApplication"
-        android:debuggable="@bool/pollfish_debug_mode"
+        android:debuggable="@bool/lennox_debug_mode"
         android:label="@string/application_name"
         android:icon="@drawable/ic_launcher"
         android:hardwareAccelerated="true"
