@@ -86,7 +86,6 @@ public class Preferences extends PreferenceActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        com.readystatesoftware.systembartint.SystemBarTintManager.tintStatusBar(this);
         PollFishHelper.onCreate(this);
 
         mPreferences = getSharedPreferences(PreferencesProvider.PREFERENCES_KEY,

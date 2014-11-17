@@ -44,8 +44,6 @@ public class HiddenAppsActivity extends ListActivity implements MenuItem.OnMenuI
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         super.onCreate(savedInstanceState);
 
-        com.readystatesoftware.systembartint.SystemBarTintManager.tintStatusBar(this);
-
         setTitle(R.string.hidden_apps_title);
         setContentView(R.layout.hidden_apps_list);
 
