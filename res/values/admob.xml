@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="admob_banner">ca-app-pub-6193931485014735/8043941455</string>
+    <string name="admob_interstitial">ca-app-pub-6193931485014735/9520674653</string>
+
+</resources>

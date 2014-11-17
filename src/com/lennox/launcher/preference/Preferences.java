@@ -72,6 +72,8 @@ import com.pollfish.interfaces.PollfishOpenedListener;
 import com.pollfish.interfaces.PollfishClosedListener;
 import com.lennox.pollfish.PollFishHelper;
 
+import com.google.ads.AdsHelper;
+
 public class Preferences extends PreferenceActivity
         implements SharedPreferences.OnSharedPreferenceChangeListener,
         PollfishSurveyReceivedListener, PollfishOpenedListener,
@@ -87,6 +89,7 @@ public class Preferences extends PreferenceActivity
         super.onCreate(savedInstanceState);
 
         PollFishHelper.onCreate(this);
+        AdsHelper.onCreate(this);
 
         mPreferences = getSharedPreferences(PreferencesProvider.PREFERENCES_KEY,
                 Context.MODE_PRIVATE);
@@ -115,6 +118,7 @@ public class Preferences extends PreferenceActivity
     protected void onResume() {
         super.onResume();
         PollFishHelper.onResume(this);
+        AdsHelper.onResume(this);
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putBoolean(PreferencesProvider.PREFERENCES_VISITED, true);
         editor.commit();
@@ -128,10 +132,22 @@ public class Preferences extends PreferenceActivity
     }
 
     @Override
+    public void onBackPressed() {
+        AdsHelper.onBackPressed(this);
+    }
+
+    @Override
+    public void onHeaderClick(Header header, int position) {
+        AdsHelper.onResume(this);
+        super.onHeaderClick(header, position);
+    }
+
+    @Override
     public void onBuildHeaders(List<Header> target) {
         loadHeadersFromResource(R.xml.preferences_headers, target);
         mHeaders = target;
         PreferenceUtils.setAboutHeader(target, this);
+        AdsHelper.adBanner(this, true);
     }
 
     @Override
